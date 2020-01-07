@@ -1,0 +1,156 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+
+def androidConfig = rootProject.ext.android
+def supportConfig = rootProject.ext.support
+def dependencyConfig = rootProject.ext.dependencies
+
+android {
+
+    compileSdkVersion androidConfig.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.targetSdkVersion
+        versionCode androidConfig.versionCode
+        versionName androidConfig.versionName
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    buildTypes {
+
+        debug{
+
+        }
+        beta {
+            debuggable = true
+        }
+        pro{
+            debuggable = true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    dataBinding {
+        enabled = true
+    }
+    sourceSets {
+        main {
+            java.srcDirs += 'src/main/kotlin'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation supportConfig["junit"]
+
+
+    api supportConfig["appcompat-v7"]
+    api supportConfig["constraint-layout"]
+    api supportConfig["support-v4"]
+    api supportConfig["recyclerview-v7"]
+    api supportConfig["design"]
+    api supportConfig["multidex"]
+
+    api dependencyConfig["lifecycle"]
+    api dependencyConfig["lifecycle-viewmodel-ktx"]
+    api dependencyConfig["lifecycle-runtime-ktx"]
+    api dependencyConfig["ktx"]
+    api dependencyConfig["kotlin-jdk7"]
+
+
+//    api dependencyConfig["room-rxjava2"]
+
+    api dependencyConfig["kodein-jvm"]
+    api dependencyConfig["kodein-android-core"]
+    api dependencyConfig["kodein-android-x"]
+
+
+    api dependencyConfig["koin"]
+    api dependencyConfig["koin-viewmodel"]
+    api dependencyConfig["koin-ext"]
+
+
+//    annotationProcessor dependencyConfig["room-compiler"]
+
+
+
+    api dependencyConfig["rxjava"]
+    api dependencyConfig["rxandroid"]
+    api dependencyConfig["rxbinding"]
+    api dependencyConfig["rxpermissions"]
+    api dependencyConfig["okhttp"]
+    api dependencyConfig["okhttp-log-interceptor"]
+    api dependencyConfig["retrofit"]
+    api dependencyConfig["converter-gson"]
+    api dependencyConfig["adapter-rxjava"]
+    api dependencyConfig["gson"]
+    api dependencyConfig["fastjson"]
+    api dependencyConfig["material-dialogs-core"]
+//    api dependencyConfig["material-dialogs-commons"]
+    api dependencyConfig["autodispose"]
+    api dependencyConfig["autodispose-android"]
+    api dependencyConfig["autodispose-android-archcomponents"]
+    api dependencyConfig["autodispose-android-rxlifecycle"]
+    api dependencyConfig["timber"]
+    api dependencyConfig["file-downloader"]
+    api dependencyConfig["baseRecyclerViewAdapterHelper"]
+    api dependencyConfig["bottom-navigation-bar"]
+
+    api dependencyConfig["hawk"]
+    api dependencyConfig["kpswitch"]
+//    api dependencyConfig["Matisse"]
+
+    api dependencyConfig["glide"]
+
+    api dependencyConfig["glide-transformations"]
+//    api dependencyConfig["ucrop"]
+    api dependencyConfig["xui"]
+    api dependencyConfig["arch"]
+    api dependencyConfig["agent-web"]
+//            {
+//        exclude group: 'com.android.support'
+//        exclude group: 'com.squareup.okio'
+//        exclude group: 'com.squareup.okhttp3'
+//    }
+//    api dependencyConfig["versionchecklib"]
+//    api dependencyConfig["subsampling-scale-image-view"]
+//    api dependencyConfig["org.jsoup"]
+//    api dependencyConfig["jsbridge"]
+    api dependencyConfig["livebus"]
+    api dependencyConfig["xupdate"]
+
+
+
+    api 'com.google.android.material:material:1.1.0-alpha10'
+    kapt 'androidx.annotation:annotation:1.0.2'
+    annotationProcessor dependencyConfig["glide-compiler"]
+    api 'com.github.xuexiangjys:XHttp2:1.0.3'
+    api 'com.jeremyliao:live-event-bus-x:1.5.4'
+    api 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
+    api "net.gotev:uploadservice:3.5.2"
+    api 'com.github.xiaohaibin:XBanner:androidx_v1.0.2'
+
+    api 'org.greenrobot:eventbus:3.1.1'
+    api 'top.zibin:Luban:1.1.3'
+    api 'pub.devrel:easypermissions:3.0.0'
+
+}

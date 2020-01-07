@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="versionchecklib_failed_dialog_exit" type="id"/>
+    <item name="versionchecklib_failed_dialog_desc" type="id"/>
+    <item name="versionchecklib_version_dialog_cancel" type="id"/>
+    <item name="versionchecklib_down_forWeb" type="id"/>
+</resources>

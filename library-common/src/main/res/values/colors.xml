@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<color name="common_theme_blue">#2196f3</color>
+<color name="white">#ffffff</color>
+<color name="crop">#FF4D4F</color>
+<color name="diver">#FAFAFA</color>
+
+<color name="colorPrimary">#CC000000</color>
+<color name="colorPrimaryDark">#CC000000</color>
+<color name="colorAccent">#CC000000</color>
+<color name="title">#CC000000</color>
+<color name="sub_title_color">#666666</color>
+<color name="transparent">#CC000000</color>
+
+
+<color name="navBarActive">#F44336</color>
+<color name="navBarUnActive">#C62828</color>
+
+
+<!--    文件选择器-->
+<color name="preview_bottom_toolbar_bg">#CC000000</color>
+<color name="preview_bottom_size">#61FFFFFF</color>
+<color name="font_size_item_color">#333333</color>
+
+</resources>

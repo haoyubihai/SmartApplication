@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cameraview_default_autofocus_marker">jrh.library.common.camera.markers.DefaultAutoFocusMarker</string>
+</resources>

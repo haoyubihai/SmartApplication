@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="selected_choice">#a3d63c</color>
+    <color name="selected_choice_bg">#afe04b</color>
+    <color name="unselected_choice_stroke">#f5da5d</color>
+    <color name="unselected_choice_item_bg">#f5e09f</color>
+    <color name="answer_item_color">#E69138</color>
+    <color name="answer_tv_color_normal">#E18422</color>
+    <color name="answer_tv_color_checked">@color/selected_choice</color>
+</resources>

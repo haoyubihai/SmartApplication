@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="#000000"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto">
+   <jrh.library.common.widgets.photoview.ShowImagesViewPager
+       android:id="@+id/vp_images"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       android:layout_width="0dp"
+       android:layout_height="0dp">
+   </jrh.library.common.widgets.photoview.ShowImagesViewPager>
+    <TextView
+
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:layout_marginTop="5px"
+        android:text="1/9"
+        android:background="@drawable/shape_white_bg_radius_20"
+        android:backgroundTint="#33000000"
+        android:textColor="@color/white"
+        android:id="@+id/tv_image_index"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</androidx.constraintlayout.widget.ConstraintLayout>

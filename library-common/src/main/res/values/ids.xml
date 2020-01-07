@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="toolbar_nav_back_icon" type="id" />
+    <item name="toolbar_nav_title" type="id" />
+    <item name="toolbar_button_l" type="id" />
+    <item name="toolbar_button_m" type="id" />
+    <item name="toolbar_button_r" type="id" />
+    <item name="toolbar_right_title" type="id" />
+
+    <item name="cb_item_tag" type="id"></item>
+</resources>

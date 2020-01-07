@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path name="internal" path="jrjy/" />
+    <cache-path name="internal" path="jrjy/pushHomeWork/camera"/>
+    <external-path name="external" path="DCIM/" />
+    <external-path name="external_file" path="." />
+
+</paths>
