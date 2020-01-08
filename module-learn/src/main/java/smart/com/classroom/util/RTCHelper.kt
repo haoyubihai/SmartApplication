@@ -1,11 +1,14 @@
-package smart.com.classroom.ui
+package smart.com.classroom.util
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import io.agora.rtc.Constants
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import jrh.library.common.app.AppConfig
+import jrh.library.common.utils.ToastUtil
 import smart.com.classroom.APPID
 import smart.com.classroom.CHANNEL
 import smart.com.classroom.RTC_TOKEN
@@ -13,11 +16,11 @@ import smart.com.classroom.UID
 import timber.log.Timber
 
 
-class ClassRoomHelper(private val listener:RoomListener):ClassRoomListener {
+class RTCHelper: ClassRoomListener {
 
-
+    val mHandler = Handler(Looper.getMainLooper())
     lateinit var mRtcEngine: RtcEngine
-    val onFirstRemoteVideoFrame = MutableLiveData<Int>()
+    val onFirstRemoteVideoDecoded = MutableLiveData<Int>()
     val onUserOffline = MutableLiveData<Int>()
     val isVideoAndAudioPlaying = MutableLiveData<Boolean>(true)
 
@@ -33,6 +36,7 @@ class ClassRoomHelper(private val listener:RoomListener):ClassRoomListener {
 
         // 本地用户成功加入频道时，会触发该回调。
         override fun onJoinChannelSuccess(channel: String?, uid: Int, elapsed: Int) {
+            mHandler.post { ToastUtil.showMessage("onJoinChannelSuccess --- $channel --uid=$uid") }
             Timber.e("ClassRoomHelper onJoinChannelSuccess channel=$channel--uid=$uid--elapsed=$elapsed---currentThreadName=${Thread.currentThread().name}")
 
         }
@@ -54,8 +58,7 @@ class ClassRoomHelper(private val listener:RoomListener):ClassRoomListener {
 
         override fun onFirstRemoteVideoDecoded(uid: Int, width: Int, height: Int, elapsed: Int) {
             Timber.e("ClassRoomHelper onFirstRemoteVideoDecoded uid=$uid--width=$width---currentThreadName=${Thread.currentThread().name}")
-
-            listener.onFirstRemoteVideoDecoded(uid, width, height, elapsed)
+            onFirstRemoteVideoDecoded.postValue(uid)
         }
 
         override fun onRemoteVideoStateChanged(uid: Int, state: Int, reason: Int, elapsed: Int) {

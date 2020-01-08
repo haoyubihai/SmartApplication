@@ -1,31 +1,44 @@
-package smart.com.classroom.ui
+package smart.com.classroom.vm
 
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import smart.com.classroom.CHANNEL
+import smart.com.classroom.RTM_TOKEN
+import smart.com.classroom.UID
 import smart.com.classroom.homework.ClassRoomData
 import smart.com.classroom.homework.HomeWork
+import smart.com.classroom.util.RTCHelper
+import smart.com.classroom.util.RTMHelper
 import java.util.concurrent.TimeUnit
 
 class ClassRoomVm {
 
-    private val classRoomRepository: ClassRoomRepository = ClassRoomRepository()
+    private val classRoomRepository: ClassRoomRepository =
+        ClassRoomRepository()
     lateinit var classRoomData: ClassRoomData
     //展示题目的id
     val showHomeWork = MutableLiveData<HomeWork>()
     var showTimeStaps = mutableListOf<Int>()
     val progress = MutableLiveData<Int>()
 
+    val rtmHelper =RTMHelper()
+    val rtcHelper = RTCHelper()
+
     init {
         getClassRoomData()
     }
+
 
     private fun getClassRoomData() {
         classRoomData = classRoomRepository.getClassRoomData()
         classRoomRepository.getTimeStap().map {
             showTimeStaps.add(it)
         }
+        rtcHelper.initHelper()
+        rtmHelper.initData(RTM_TOKEN, UID.toString(), CHANNEL)
+
     }
 
 

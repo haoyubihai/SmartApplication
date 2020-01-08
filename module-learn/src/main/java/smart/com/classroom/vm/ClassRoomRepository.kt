@@ -1,4 +1,4 @@
-package smart.com.classroom.ui
+package smart.com.classroom.vm
 
 import smart.com.classroom.CHANNEL
 import smart.com.classroom.RTC_TOKEN

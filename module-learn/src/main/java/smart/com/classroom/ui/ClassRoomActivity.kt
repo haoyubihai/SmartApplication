@@ -14,7 +14,8 @@ import jrh.library.common.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_class_room.*
 import smart.com.R
 import smart.com.classroom.homework.ChoiceFragment
-import smart.com.classroom.homework.HomeWorkFragment
+import smart.com.classroom.util.RTCHelper
+import smart.com.classroom.vm.ClassRoomVm
 import smart.com.common.utils.PermissionUtils
 
 const val CLOSE_CHOICE_FRAGMENT = "CLOSE_CHOICE_FRAGMENT"
@@ -24,7 +25,7 @@ class ClassRoomActivity : BaseActivity() {
     lateinit var choiceFragment: ChoiceFragment
 
     lateinit var classRoomVm: ClassRoomVm
-    lateinit var classRoomHelper: ClassRoomHelper
+    lateinit var rtcHelper: RTCHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -34,7 +35,6 @@ class ClassRoomActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         checkUsePermission()
 
-        initHelper()
         initData()
         initEventListener()
         initView()
@@ -44,42 +44,43 @@ class ClassRoomActivity : BaseActivity() {
 
     private fun initData() {
         classRoomVm = ClassRoomVm()
-        classRoomVm.play()
+        rtcHelper = classRoomVm.rtcHelper
+//        classRoomVm.play()
     }
 
     private fun initView() {
         ivBack.setOnClickListener { finish() }
-        ivPlay.setOnClickListener { classRoomHelper.toggleVideoAndAudio() }
+        ivPlay.setOnClickListener { rtcHelper.toggleVideoAndAudio() }
 
     }
 
-    private fun initHelper() {
-        classRoomHelper = ClassRoomHelper(object :RoomListener{
-            override fun onFirstRemoteVideoDecoded(
-                uid: Int,
-                width: Int,
-                height: Int,
-                elapsed: Int
-            ) {
-                runOnUiThread {
-                    val mRemoteView = RtcEngine.CreateRendererView(AppConfig.getContext())
-                    classRoomHelper.mRtcEngine.setupRemoteVideo(VideoCanvas(mRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid))
-                    videoContainer.addView(mRemoteView)
-                }
-            }
 
-        })
-        classRoomHelper.initHelper()
+
+    private fun addRemoteView(uid: Int) {
+        val mRemoteView = RtcEngine.CreateRendererView(AppConfig.getContext())
+        rtcHelper.mRtcEngine.setupRemoteVideo(
+            VideoCanvas(
+                mRemoteView,
+                VideoCanvas.RENDER_MODE_HIDDEN,
+                uid
+            )
+        )
+        videoContainer.addView(mRemoteView)
     }
 
     private fun initEventListener() {
-        classRoomHelper.isVideoAndAudioPlaying.observe(this,
+        rtcHelper.isVideoAndAudioPlaying.observe(this,
             Observer<Boolean> {isPlaying->
                 ivPlay.setImageResource(if (isPlaying) R.drawable.ic_stop else  R.drawable.ic_play)
                 if (!isPlaying){
 
                 }
             })
+
+        rtcHelper.onFirstRemoteVideoDecoded.observe(this, Observer { uid->
+            toast("onFirstRemoteVideoDecoded--")
+            addRemoteView(uid)
+        })
 
         classRoomVm.showHomeWork.observe(this, Observer {
             it?.let {
@@ -114,6 +115,6 @@ class ClassRoomActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        classRoomHelper.leaveChannel()
+        rtcHelper.leaveChannel()
     }
 }
