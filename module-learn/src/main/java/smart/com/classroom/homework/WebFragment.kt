@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import com.aly.phone.base.ui.BaseFragment
 import com.just.agentweb.*
+import kotlinx.android.synthetic.main.fragment_choice_web.*
 import smart.com.R
 
 /**
@@ -60,7 +61,7 @@ open class WebFragment : BaseFragment() {
 
     open fun getViewContainer(): ViewGroup {
 
-        return rootView as LinearLayout
+        return choiceWebContainer
     }
 
     open fun getUrl(): String? {

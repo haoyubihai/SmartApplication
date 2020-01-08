@@ -66,7 +66,7 @@ class ClassRoomRepository {
         var homeWorks = mutableListOf<HomeWork>()
         for (i in 0 .. 10){
             homeWorks.add(
-                HomeWork(0,i,"title$i","",15,
+                HomeWork(0,"title-desc",i,"title$i","",15,
                 choices = arrayListOf(
                     KeyValue("A","handbag"),
                     KeyValue("B","pencil"),

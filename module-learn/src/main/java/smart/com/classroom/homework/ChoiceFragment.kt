@@ -76,7 +76,7 @@ class ChoiceFragment : BaseFragment(), View.OnClickListener {
 
         }
         return HomeWork(
-            0, 0, "What can you see in the picture ?", "http://ssss.jpg", 15, choices, choices[0]
+            0, "desc",0, "What can you see in the picture ?", "http://ssss.jpg", 15, choices, choices[0]
         )
     }
 

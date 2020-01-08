@@ -48,7 +48,7 @@ class HomeWorkFragment : WebFragment() {
     }
 
     override fun getUrl(): String? {
-        return "file:///android_asset/js_interaction/hello.html"
+        return "file:///android_asset/js/choice.html"
     }
     override fun getViewContainer() = webContainer
 }

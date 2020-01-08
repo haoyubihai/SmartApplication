@@ -14,6 +14,7 @@ import jrh.library.common.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_class_room.*
 import smart.com.R
 import smart.com.classroom.homework.ChoiceFragment
+import smart.com.classroom.homework.HomeWorkFragment
 import smart.com.classroom.util.RTCHelper
 import smart.com.classroom.vm.ClassRoomVm
 import smart.com.common.utils.PermissionUtils
@@ -45,7 +46,7 @@ class ClassRoomActivity : BaseActivity() {
     private fun initData() {
         classRoomVm = ClassRoomVm()
         rtcHelper = classRoomVm.rtcHelper
-//        classRoomVm.play()
+        classRoomVm.play()
     }
 
     private fun initView() {

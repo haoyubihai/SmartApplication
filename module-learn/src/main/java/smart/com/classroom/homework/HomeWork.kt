@@ -25,6 +25,8 @@ data class ClassRoomData(
 data class HomeWork(
     /** 作业类型 0 选择题，1语音题*/
     val type: Int,
+    /** 作业类型描述 ：如看图选择答案*/
+    val typeDesc:String,
     /** id */
     val id: Int,
     /** 标题*/

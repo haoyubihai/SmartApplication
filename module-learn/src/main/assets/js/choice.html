@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>choice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+            box-sizing: border-box;
+        }
+
+        #main {
+            width: 100vw;
+            height: 100vh;
+            background-color: #FFDB52;
+            background-image: url("./image/bg@2x.png");
+            background-position: center center;
+        }
+
+        #main .wapper {
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #main .clock {
+            margin: 0 auto;
+            width: 9.54rem;
+            padding-bottom: 0.33rem;
+        }
+
+        #main .clock div {
+            position: relative;
+            width: 9.54rem;
+            height: 2.71rem;
+            background: url("./image/clock@2x.png") no-repeat center center / 100% 100%;
+        }
+
+        #main .clock div p {
+            position: absolute;
+            left: 3.58rem;
+            top:0.6rem;
+            font-size: 1.25rem;
+            font-family: PingFang SC;
+            font-weight: 600;
+            color: rgba(152, 98, 46, 1);
+            text-align: center;
+        }
+
+        #main .container {
+            margin: 0 auto;
+            position: relative;
+            padding: 0.54rem;
+            width: 49.96rem;
+            height: 26.38rem;
+            background: rgba(255, 189, 17, 1);
+            border-radius: 1rem;
+        }
+
+        #main .container .content {
+            display: flex;
+            justify-content: space-between;
+            align-content: center;
+        }
+
+        #main .container .left {
+            position: relative;
+            width: 24.29rem;
+            height: 25.37rem;
+            z-index: 2;
+        }
+
+        #main .container .left .top {
+            position: absolute;
+            top: 0;
+            width: 24.29rem;
+            height: 25.04rem;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 1rem;
+            z-index: 2;
+        }
+
+        #main .container .left .top .title {
+            display: table;
+            margin: 1.04rem 0 1.5rem 1.17rem;
+            padding: 0.33rem 0.92rem;
+            background: rgba(255, 117, 49, 1);
+            border-radius: 1rem;
+        }
+
+        #main .container .left .top .title p {
+            display: table-cell;
+            font-size: 1.04rem;
+            font-family: Yuanti SC;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            text-shadow: 0rem 0rem 0rem rgba(235, 150, 32, 0.31);
+            text-align: center;
+        }
+
+        #main .container .left .top .question {
+            position: relative;
+            z-index: 2;
+            padding: 0 1.79rem;
+            font-size: 1.04rem;
+            font-family: Yuanti SC;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        #main .container .left .top img {
+            position: relative;
+            width: 13.42rem;
+            height: 11.96rem;
+            position: absolute;
+            left: 0.79rem;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        #main .container .left .bottom {
+            position: absolute;
+            top: 0.33rem;
+            width: 24.29rem;
+            height: 25.04rem;
+            background: rgba(251, 226, 183, 1);
+            border-radius: 1rem;
+            z-index: 1;
+        }
+
+        #main .container .middle {
+            position: absolute;
+            top: 5.5rem;
+            left: 50%;
+            height: 14.5rem;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        #main .container .middle img {
+            width: 2.79rem;
+            height: 0.83rem;
+        }
+
+        #main .container .right {
+            position: relative;
+            width: 24.29rem;
+            height: 25.37rem;
+            z-index: 2;
+        }
+
+        #main .container .right .top {
+            position: absolute;
+            top: 0;
+            width: 24.29rem;
+            height: 25.04rem;
+            background: rgba(255, 248, 236, 1);
+            border-radius: 1rem;
+            z-index: 2;
+        }
+
+        #main .container .right .top ul {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #main .container .right .top ul li {
+            width: 16.29rem;
+            height: 4.08rem;
+            padding: 1.04rem 1.67rem;
+            margin-bottom: 1.79rem;
+            list-style: none;
+            background: rgba(255, 255, 255, 1);
+            border: 0.2rem solid rgba(255, 219, 82, 1);
+            box-shadow: 0rem 0rem 1rem 0rem rgba(172, 172, 172, 0.35);
+            border-radius: 0.5rem;
+        }
+
+        #main .container .right .top ul li .letter {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            line-height: 2rem;
+            background: rgba(253, 225, 157, 1);
+            border-radius: 50%;
+            font-size: 1.46rem;
+            font-family: Arial Rounded MT Bold;
+            font-weight: 400;
+            color: rgba(255, 135, 6, 1);
+            text-align: center;
+        }
+
+        #main .container .right .top ul li .option {
+            margin-left: 2.79rem;
+            font-size: 1.25rem;
+            font-family: Yuanti SC;
+            font-weight: bold;
+            color: rgba(255, 135, 6, 1);
+        }
+
+        #main .container .right .bottom {
+            position: absolute;
+            top: 0.33rem;
+            width: 24.29rem;
+            height: 25.04rem;
+            background: rgba(251, 226, 183, 1);
+            border-radius: 1rem;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div class="wapper">
+        <div class="clock">
+            <div><p>00 : 15</p></div>
+        </div>
+        <div class="container">
+            <div class="middle">
+                <img class="" src="./image/middle@2x.png"/>
+                <img class="" src="./image/middle@2x.png"/>
+                <img class="" src="./image/middle@2x.png"/>
+            </div>
+            <div class="content">
+                <div class="left">
+                    <div class="top">
+                        <div class="title"><p>看问题选答案</p></div>
+                        <div class="question">你认为视频中的两个人相互认识吗？</div>
+                        <img class="" src="./image/left@2x.png"/>
+                    </div>
+                    <div class="bottom"></div>
+                </div>
+                <div class="right">
+                    <div class="top">
+                        <ul>
+                            <li><span class="letter">A</span><span class="option">认 识</span></li>
+                            <li><span class="letter">B</span><span class="option">不 认 识</span></li>
+                        </ul>
+                    </div>
+                    <div class="bottom"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    detectOrient();
+    window.onresize = function () {
+        detectOrient();
+    };
+
+    function detectOrient() {
+        let width = document.documentElement.clientWidth / 12,
+            height = document.documentElement.clientHeight / 12,
+            wrapper = document.getElementById("main"),
+            style = "";
+        if (width >= height) { // 竖屏
+            style += "width:100%";
+            style += "height:100%;";
+            style += "-webkit-transform: rotate(0); transform: rotate(0);";
+            style += "-webkit-transform-origin: 0 0;";
+            style += "transform-origin: 0 0;";
+        } else { // 横屏
+            style += "width:" + height + "rem;";// 注意旋转后的宽高切换
+            style += "height:" + width + "rem;";
+            style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+            // 注意旋转中点的处理
+            style += "-webkit-transform-origin: " + width / 2 + "rem " + width / 2 + "rem;";
+            style += "transform-origin: " + width / 2 + "rem " + width / 2 + "rem;";
+        }
+        wrapper.style.cssText = style;
+    }
+</script>
+</html>
