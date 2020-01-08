@@ -13,17 +13,18 @@ import jrh.library.common.app.AppConfig
 import jrh.library.common.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_class_room.*
 import smart.com.R
-import smart.com.classroom.homework.ChoiceFragment
-import smart.com.classroom.homework.HomeWorkFragment
+import smart.com.classroom.homework.*
 import smart.com.classroom.util.RTCHelper
 import smart.com.classroom.vm.ClassRoomVm
 import smart.com.common.utils.PermissionUtils
+import timber.log.Timber
+import kotlin.random.Random
 
 const val CLOSE_CHOICE_FRAGMENT = "CLOSE_CHOICE_FRAGMENT"
 class ClassRoomActivity : BaseActivity() {
 
     override val layoutId = R.layout.activity_class_room
-    lateinit var choiceFragment: ChoiceFragment
+    lateinit var choiceFragment: HomeWorkFragment
 
     lateinit var classRoomVm: ClassRoomVm
     lateinit var rtcHelper: RTCHelper
@@ -40,13 +41,16 @@ class ClassRoomActivity : BaseActivity() {
         initEventListener()
         initView()
 
+        JSONHelper.toJSON(WebCallRes(WEB_RES_CHOICE_RESULT, arrayListOf(KeyValue("A","handbag")))).let {
+            Timber.e("返回结果===$it")
+        }
 
     }
 
     private fun initData() {
         classRoomVm = ClassRoomVm()
         rtcHelper = classRoomVm.rtcHelper
-        classRoomVm.play()
+//        classRoomVm.play()
     }
 
     private fun initView() {
@@ -74,7 +78,7 @@ class ClassRoomActivity : BaseActivity() {
             Observer<Boolean> {isPlaying->
                 ivPlay.setImageResource(if (isPlaying) R.drawable.ic_stop else  R.drawable.ic_play)
                 if (!isPlaying){
-
+                    showHomeworkView()
                 }
             })
 
@@ -85,9 +89,9 @@ class ClassRoomActivity : BaseActivity() {
 
         classRoomVm.showHomeWork.observe(this, Observer {
             it?.let {
-                toast("${it.title}")
-                classRoomVm.stop()
-                showHomeworkView()
+//                toast("${it.title}")
+//                classRoomVm.stop()
+//                showHomeworkView()
             }
         })
         classRoomVm.progress.observe(this, Observer {
@@ -96,14 +100,14 @@ class ClassRoomActivity : BaseActivity() {
 
         LiveEventBus.get(CLOSE_CHOICE_FRAGMENT).observe(this, Observer {
             removeFragment(homeworkContainer,choiceFragment)
-            classRoomVm.play()
+//            classRoomVm.play()
 
         })
     }
 
     private fun showHomeworkView() {
         homeworkContainer.visibility = View.VISIBLE
-        choiceFragment = ChoiceFragment()
+        choiceFragment = HomeWorkFragment.newInstance(Random.nextInt(10))
         loadFragment(R.id.homeworkContainer, choiceFragment)
     }
 

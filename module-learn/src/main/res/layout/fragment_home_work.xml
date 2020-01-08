@@ -12,56 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-    <TextView
-        android:id="@+id/tvContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:background="#20000000"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/A"
-            android:text="A"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/B"
-            android:text="B"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:text="C"
-            android:id="@+id/C"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:text="D"
-            android:id="@+id/D"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+
 
 </RelativeLayout>

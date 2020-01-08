@@ -28,7 +28,7 @@ class ChoiceFragment : BaseFragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val homeWork: HomeWork = getHomeWork()
-        Timber.e("homeworkJson="+ JSONHelper.toJson(homeWork))
+        Timber.e("homeworkJson="+ JSONHelper.toJSON(homeWork))
         tvTitle.text = homeWork.title
         tvA.initView(homeWork.choices[0])
         tvB.initView(homeWork.choices[1])

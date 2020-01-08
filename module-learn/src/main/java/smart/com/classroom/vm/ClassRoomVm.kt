@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 import smart.com.classroom.CHANNEL
 import smart.com.classroom.RTM_TOKEN
 import smart.com.classroom.UID
@@ -11,11 +13,17 @@ import smart.com.classroom.homework.ClassRoomData
 import smart.com.classroom.homework.HomeWork
 import smart.com.classroom.util.RTCHelper
 import smart.com.classroom.util.RTMHelper
+import viewmodel.KBaseViewModel
 import java.util.concurrent.TimeUnit
 
-class ClassRoomVm {
+val classRoomModule = module {
+    viewModel { ClassRoomVm() }
+}
 
-    private val classRoomRepository: ClassRoomRepository =
+
+class ClassRoomVm : KBaseViewModel(){
+
+    val classRoomRepository: ClassRoomRepository =
         ClassRoomRepository()
     lateinit var classRoomData: ClassRoomData
     //展示题目的id
@@ -43,7 +51,7 @@ class ClassRoomVm {
 
 
     fun showHomeworkView(time: Int) {
-        val homeWork = classRoomRepository.findShowHomeHork(time)
+        val homeWork = classRoomRepository.findShowHomeWork(time)
         homeWork?.let {
             showHomeWork.value = it
         }

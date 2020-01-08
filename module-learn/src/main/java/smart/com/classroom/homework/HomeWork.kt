@@ -1,6 +1,7 @@
 package smart.com.classroom.homework
 
 import com.alibaba.fastjson.JSON
+import com.google.gson.Gson
 
 
 /** 拉取课程信息*/
@@ -26,7 +27,7 @@ data class HomeWork(
     /** 作业类型 0 选择题，1语音题*/
     val type: Int,
     /** 作业类型描述 ：如看图选择答案*/
-    val typeDesc:String,
+    val typeDesc: String,
     /** id */
     val id: Int,
     /** 标题*/
@@ -49,12 +50,24 @@ data class HomeworkRes(
     /** 课程id*/
     val courseId: Int,
     /** 作业内容*/
-    val homeWorks: List<HomeWork>)
+    val homeWorks: List<HomeWork>
+)
 
+/** 倒计时结束*/
+const val WEB_RES_TIME_OVER = 0
+/** 答题结束*/
+const val WEB_RES_CHOICE_RESULT = 1
+
+/**
+ * web 交互返回的实体
+ *
+ */
+data class WebCallRes(val type: Int, val extra: List<KeyValue>?)
 
 class JSONHelper {
     companion object {
-        fun toJson(homeWork: HomeWork) = JSON.toJSONStringWithDateFormat(homeWork, "yyyyMMdd")
+        fun toJSON(o:Any) = Gson().toJson(o)
+
     }
 }
 

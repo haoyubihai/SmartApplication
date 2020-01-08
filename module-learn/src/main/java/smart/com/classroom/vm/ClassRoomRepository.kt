@@ -59,19 +59,21 @@ class ClassRoomRepository {
     /**
      * 根据时间节点查找对应展示的试题
      */
-    fun findShowHomeHork(time:Int):HomeWork? = classRMdata.homeworkRes.homeWorks.find { it.id==findShowHomeworkId(time)}
+    fun findShowHomeWork(time:Int):HomeWork? = findShowHomeworkId(time)?.let {findHomeWorkById(it)}
+
+    fun findHomeWorkById(id:Int):HomeWork? = classRMdata.homeworkRes.homeWorks.find { it.id==id }
 
     private fun getHomeworks():List<HomeWork>{
 
         var homeWorks = mutableListOf<HomeWork>()
         for (i in 0 .. 10){
             homeWorks.add(
-                HomeWork(0,"title-desc",i,"title$i","",15,
+                HomeWork(0,"title-desc$i",i,"title$i","",15,
                 choices = arrayListOf(
-                    KeyValue("A","handbag"),
-                    KeyValue("B","pencil"),
-                    KeyValue("C","school")
-                ),answer = KeyValue("A","handbag")
+                    KeyValue("A","handbag$i"),
+                    KeyValue("B","pencil$i"),
+                    KeyValue("C","school$i")
+                ),answer = KeyValue("A","handbag$i")
                 ))
         }
         return homeWorks

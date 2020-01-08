@@ -12,6 +12,7 @@ import jrh.library.common.http.request.Requester
 import okhttp3.OkHttpClient
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
+import smart.com.classroom.vm.classRoomModule
 import smart.com.http.DataError
 import smart.com.http.HttpUrls
 import smart.com.http.ParamsInterceptor
@@ -84,7 +85,7 @@ class App : KBaseApplication() {
 
             loadKoinModules(
                 listOf(
-                    loginModule
+                    loginModule,classRoomModule
                 )
             )
         }
