@@ -10,6 +10,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 import jrh.library.common.app.AppConfig
+import jrh.library.common.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_class_room.*
 import smart.com.R
 import smart.com.classroom.homework.ChoiceFragment
@@ -83,12 +84,17 @@ class ClassRoomActivity : BaseActivity() {
         classRoomVm.showHomeWork.observe(this, Observer {
             it?.let {
                 toast("${it.title}")
+                classRoomVm.stop()
                 showHomeworkView()
             }
+        })
+        classRoomVm.progress.observe(this, Observer {
+            tvProgress.text = TimeUtils.formatDuration(it*1000)
         })
 
         LiveEventBus.get(CLOSE_CHOICE_FRAGMENT).observe(this, Observer {
             removeFragment(homeworkContainer,choiceFragment)
+            classRoomVm.play()
 
         })
     }
