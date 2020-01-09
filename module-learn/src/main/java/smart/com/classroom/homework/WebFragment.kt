@@ -37,8 +37,8 @@ open class WebFragment : BaseFragment() {
             ) //传入AgentWeb的父控件。
             .useDefaultIndicator(-1, 2) //设置进度条颜色与高度，-1为默认值，高度为2，单位为dp。
 //            .setAgentWebWebSettings(getSettings()) //设置 IAgentWebSettings。
-//            .setWebViewClient(mWebViewClient) //WebViewClient ， 与 WebView 使用一致 ，但是请勿获取WebView调用setWebViewClient(xx)方法了,会覆盖AgentWeb DefaultWebClient,同时相应的中间件也会失效。
-//            .setWebChromeClient(CommonWebChromeClient()) //WebChromeClient
+            .setWebViewClient(getWebClient()) //WebViewClient ， 与 WebView 使用一致 ，但是请勿获取WebView调用setWebViewClient(xx)方法了,会覆盖AgentWeb DefaultWebClient,同时相应的中间件也会失效。
+            .setWebChromeClient(getWebChromeClient()) //WebChromeClient
 //            .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK) //严格模式 Android 4.2.2 以下会放弃注入对象 ，使用AgentWebView没影响。
 //            .setAgentWebUIController(UIController()) //自定义UI  AgentWeb3.0.0 加入。
             .setMainFrameErrorView(
@@ -73,11 +73,13 @@ open class WebFragment : BaseFragment() {
     }
 
     open fun getMiddlewareWebChrome() = object : MiddlewareWebChromeBase(){}
+    open fun getWebClient() = mWebViewClient
+    open fun getWebChromeClient() = WebChromeClient()
 
-    private val mWebViewClient = object : WebViewClient(){}
-
+      val mWebViewClient = object : WebViewClient(){}
 }
 
-class CommonWebChromeClient : WebChromeClient()
+
+
 
 class UIController : AgentWebUIControllerImplBase()

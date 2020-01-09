@@ -1,0 +1,25 @@
+@startuml
+start
+if(请求教室相关数据) then (success)
+    : 进入Ai教室;
+    if (课程开始) then (yes)
+        if (正在答题) then (no)
+        else (yes)
+        :答题结束;
+        :上传答题结果;
+        endif
+     else (no)
+     -[#green]->
+     :课前视频;
+     -[#green]->
+     :开始上课;
+     -[#green]->
+    endif
+    :上课中;
+    :上课结束;
+    stop
+else(failed)
+    : 暂时无法进入教室\n稍后重试;
+    stop
+
+@enduml

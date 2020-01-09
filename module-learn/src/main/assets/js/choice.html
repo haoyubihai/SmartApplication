@@ -334,11 +334,15 @@
         }
 
         #popBox .sorry {
-            padding-top: 2rem;
-            padding-left: 1rem;
+            position: absolute;
+            top: 2rem;
+            left:2rem;
             width: 16.88rem;
             height: 17.04rem;
         }
+
+
+
     </style>
 </head>
 <body>
@@ -381,39 +385,47 @@
         <img class="good" src="./image/good@2x.png"/>
         <img class="sorry" src="./image/sorry@2x.png"/>
     </div>
+    <audio id="right-audio" src="./music/right.wav" style="display: none"></audio>
+    <audio id="wrong-audio" src="./music/wrong.wav" style="display: none"></audio>
 </div>
 </body>
-<script>
-<!--    var json = {-->
-<!--        "answer": {-->
-<!--            "key": "A",-->
-<!--            "value": "handbag"-->
-<!--        },-->
-<!--        "choices": [-->
-<!--            {-->
-<!--                "key": "A",-->
-<!--                "value": "handbag"-->
-<!--            },-->
-<!--            {-->
-<!--                "key": "B",-->
-<!--                "value": "pencil"-->
-<!--            },-->
-<!--            {-->
-<!--                "key": "C",-->
-<!--                "value": "school"-->
-<!--            }-->
-<!--        ],-->
-<!--        "content": "http://ssss.jpg",-->
-<!--        "id": 0,-->
-<!--        "time": 15,-->
-<!--        "title": "What can you see in the picture ?",-->
-<!--        "type": 0,-->
-<!--        "typeDesc": "desc"-->
-<!--    };-->
-    //接收数据
-     function callByAndroidMoreParams(json){
-         var json = json;
-     }
+<script type="text/javascript">
+    // var json = {
+    //     "answer": {
+    //         "key": "A",
+    //         "value": "handbag"
+    //     },
+    //     "choices": [
+    //         {
+    //             "key": "A",
+    //             "value": "handbag"
+    //         },
+    //         {
+    //             "key": "B",
+    //             "value": "pencil"
+    //         },
+    //         {
+    //             "key": "C",
+    //             "value": "school"
+    //         }
+    //     ],
+    //     "content": "http://ssss.jpg",
+    //     "id": 0,
+    //     "time": 15,
+    //     "title": "What can you see in the picture ?",
+    //     "type": 0,
+    //     "typeDesc": "desc"
+    // };
+    // 接收数据
+
+
+    function callByAndroidMoreParams(json){
+        window.json = json;
+    }
+
+    sendHelloToAndroid({'type':-1})
+
+    window.option = false;
     detectOrient();
     window.onresize = function () {
         detectOrient();
@@ -457,7 +469,7 @@
         // 填充题目
         document.getElementsByClassName('title-content')[0].innerText = json.typeDesc;
         document.getElementsByClassName('question')[0].innerText = json.title;
-        // 填充选项;
+        // 填充选项
         var _html = '';
         for (var i = 0; i < json.choices.length; i++) {
             _html += '<li onclick="clickOption(event)" dataKey="' + json.choices[i].key + '" dataValue="' + json.choices[i].value + '" ><span class="letter">' + json.choices[i].key + '</span><span class="option">' + json.choices[i].value + '</span></li>';
@@ -482,10 +494,16 @@
     }
 
     function clickOption(e) {
-        console.log(e);
         e.preventDefault();
+        if(window.option){
+            return false;
+        }
+        window.option = true;
         var e = e || window.event;
         var obj = e.target || e.srcElement;
+        if (obj.tagName == 'SPAN'){
+            obj = obj.parentNode;
+        };
         for (var i = 0; i < json.choices.length; i++) {
             if (json.choices[i]['key'] == obj.getAttribute("dataKey")) {
                 obj.classList.add('option-right');
@@ -493,7 +511,8 @@
                     popBox();
                     document.getElementsByClassName('good')[0].style.display = "block";
                     document.getElementsByClassName('sorry')[0].style.display = "none";
-                }, 2000);
+                    document.getElementById('right-audio').play();
+                }, 500);
                 question(obj);
                 return false;
             } else {
@@ -502,7 +521,8 @@
                     popBox();
                     document.getElementsByClassName('good')[0].style.display = "none";
                     document.getElementsByClassName('sorry')[0].style.display = "block";
-                }, 2000);
+                    document.getElementById('wrong-audio').play();
+                }, 500);
                 question(obj);
                 return false;
             }
@@ -519,6 +539,7 @@
             ],
             "type": 1
         };
+        console.log(_option);
         sendHelloToAndroid(_option);
     }
 
@@ -529,6 +550,7 @@
         popBox.style.display = "block";
         popLayer.style.display = "block";
     }
+
 
 </script>
 </html>

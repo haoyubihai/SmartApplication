@@ -33,7 +33,7 @@ class ClassRoomRepository {
     }
 
     private fun getShowHomeWork(): List<KeyValue> {
-        return arrayListOf(
+        return mutableListOf(
             KeyValue(5.toString(),0.toString()),
             KeyValue(35.toString(),1.toString()),
             KeyValue(65.toString(),2.toString())

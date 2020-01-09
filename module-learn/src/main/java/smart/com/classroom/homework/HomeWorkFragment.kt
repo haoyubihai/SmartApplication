@@ -1,12 +1,16 @@
 package smart.com.classroom.homework
 
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.webkit.ValueCallback
+import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.jeremyliao.liveeventbus.LiveEventBus
+import com.just.agentweb.WebChromeClient
+import com.just.agentweb.WebViewClient
 import kotlinx.android.synthetic.main.fragment_home_work.*
 import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -51,9 +55,12 @@ class HomeWorkFragment : WebFragment() {
         agentWeb.jsInterfaceHolder.addJavaObject("android",HomeworkWebHandler{
             Timber.e("返回的json==$it")
             val webCallRes = Gson().fromJson<WebCallRes>(it,WebCallRes::class.java)
-
+            homeWork = classRoomVm.classRoomRepository.findHomeWorkById(homeworkId!!)
             webCallRes?.let {
                 when(it.type){
+                    WEB_LOAD_BEGIN->{
+                        initWebHomeworkData()
+                    }
                     WEB_RES_TIME_OVER->{
                         exit()
                     }
@@ -63,15 +70,6 @@ class HomeWorkFragment : WebFragment() {
                 }
             }
         })
-
-        val homework = classRoomVm.classRoomRepository.findHomeWorkById(homeworkId!!)
-
-        homework?.let {
-            Timber.e("找到试题---${JSONHelper.toJSON(homework)}")
-            agentWeb.jsAccessEntrace.quickCallJs("callByAndroidMoreParams",JSONHelper.toJSON(homework))
-        }
-
-
     }
 
     private fun exit() {
@@ -95,4 +93,35 @@ class HomeWorkFragment : WebFragment() {
         return "file:///android_asset/js/choice.html"
     }
     override fun getViewContainer() = webContainer
+
+    override fun getWebClient(): WebViewClient {
+        return object :WebViewClient(){
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+            }
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+
+
+            }
+        }
+    }
+
+    override fun getWebChromeClient(): WebChromeClient {
+        return object:WebChromeClient(){
+
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                super.onProgressChanged(view, newProgress)
+
+            }
+
+        }
+    }
+
+    private fun initWebHomeworkData() {
+        homeWork?.let {
+            Timber.e("找到试题--加载网页数据---${JSONHelper.toJSON(it)}")
+            agentWeb.jsAccessEntrace.quickCallJs("callByAndroidMoreParams",  JSONHelper.toJSON(it))
+        }
+    }
 }

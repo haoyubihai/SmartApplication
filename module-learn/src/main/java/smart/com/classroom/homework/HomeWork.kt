@@ -53,10 +53,13 @@ data class HomeworkRes(
     val homeWorks: List<HomeWork>
 )
 
+/** 页面开始加载*/
+const val WEB_LOAD_BEGIN= -1
 /** 倒计时结束*/
 const val WEB_RES_TIME_OVER = 0
 /** 答题结束*/
 const val WEB_RES_CHOICE_RESULT = 1
+
 
 /**
  * web 交互返回的实体
