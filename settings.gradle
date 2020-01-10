@@ -1,2 +1,2 @@
-include ':app', ':module-learn',':library-common'
+include ':app', ':module-learn',':library-common', ':module-videoplayer'
 rootProject.name='SmartApplication'

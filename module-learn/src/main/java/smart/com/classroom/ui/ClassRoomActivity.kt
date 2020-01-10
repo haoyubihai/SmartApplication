@@ -7,17 +7,20 @@ import android.view.WindowManager
 import androidx.lifecycle.Observer
 import com.aly.phone.base.ui.BaseActivity
 import com.jeremyliao.liveeventbus.LiveEventBus
+import com.jrh.video.VideoPlayerActivity
+import extension.startKtxActivity
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 import jrh.library.common.app.AppConfig
 import jrh.library.common.utils.TimeUtils
 import kotlinx.android.synthetic.main.activity_class_room.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import smart.com.R
 import smart.com.classroom.homework.*
 import smart.com.classroom.util.RTCHelper
 import smart.com.classroom.vm.ClassRoomVm
 import smart.com.common.utils.PermissionUtils
-import timber.log.Timber
+import ui.KBaseActivity
 import kotlin.random.Random
 
 const val CLOSE_CHOICE_FRAGMENT = "CLOSE_CHOICE_FRAGMENT"
@@ -26,8 +29,10 @@ class ClassRoomActivity : BaseActivity() {
     override val layoutId = R.layout.activity_class_room
     lateinit var choiceFragment: HomeWorkFragment
 
-    lateinit var classRoomVm: ClassRoomVm
+    private val classRoomVm: ClassRoomVm by viewModel()
     lateinit var rtcHelper: RTCHelper
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -36,26 +41,23 @@ class ClassRoomActivity : BaseActivity() {
         adpat(lp)
         super.onCreate(savedInstanceState)
         checkUsePermission()
-
         initData()
         initEventListener()
         initView()
-
-        JSONHelper.toJSON(WebCallRes(WEB_RES_CHOICE_RESULT, arrayListOf(KeyValue("A","handbag")))).let {
-            Timber.e("返回结果===$it")
-        }
-
     }
 
     private fun initData() {
-        classRoomVm = ClassRoomVm()
         rtcHelper = classRoomVm.rtcHelper
 //        classRoomVm.play()
     }
 
     private fun initView() {
         ivBack.setOnClickListener { finish() }
-        ivPlay.setOnClickListener { rtcHelper.toggleVideoAndAudio() }
+        ivPlay.setOnClickListener {
+//            startKtxActivity<LocalClassRoomActivity>()
+//            startActivity(Intent(this,VideoPlayerActivity2::class.java))
+            rtcHelper.toggleVideoAndAudio()
+        }
 
     }
 
@@ -92,6 +94,7 @@ class ClassRoomActivity : BaseActivity() {
 //                toast("${it.title}")
 //                classRoomVm.stop()
 //                showHomeworkView()
+
             }
         })
         classRoomVm.progress.observe(this, Observer {

@@ -52,14 +52,13 @@ class HomeWorkFragment : WebFragment() {
             exit()
             return
         }
+        homeWork = classRoomVm.classRoomRepository.findHomeWorkById(homeworkId!!)
         agentWeb.jsInterfaceHolder.addJavaObject("android",HomeworkWebHandler{
             Timber.e("返回的json==$it")
             val webCallRes = Gson().fromJson<WebCallRes>(it,WebCallRes::class.java)
-            homeWork = classRoomVm.classRoomRepository.findHomeWorkById(homeworkId!!)
             webCallRes?.let {
                 when(it.type){
                     WEB_LOAD_BEGIN->{
-                        initWebHomeworkData()
                     }
                     WEB_RES_TIME_OVER->{
                         exit()
@@ -70,7 +69,10 @@ class HomeWorkFragment : WebFragment() {
                 }
             }
         })
+
     }
+
+
 
     private fun exit() {
         LiveEventBus.get(CLOSE_CHOICE_FRAGMENT).post(CLOSE_CHOICE_FRAGMENT)
@@ -98,12 +100,15 @@ class HomeWorkFragment : WebFragment() {
         return object :WebViewClient(){
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
+                initWebHomeworkData()
             }
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
 
 
             }
+
+
         }
     }
 
@@ -114,6 +119,8 @@ class HomeWorkFragment : WebFragment() {
                 super.onProgressChanged(view, newProgress)
 
             }
+
+
 
         }
     }

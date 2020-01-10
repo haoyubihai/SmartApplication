@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jrh.video">
+
+    <application>
+        <activity
+            android:name=".VideoPlayerActivity2"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Full"></activity>
+        <activity
+            android:name=".VideoPlayerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Full" />
+    </application>
+
+</manifest>

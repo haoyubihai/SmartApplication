@@ -13,6 +13,7 @@ import smart.com.classroom.homework.ClassRoomData
 import smart.com.classroom.homework.HomeWork
 import smart.com.classroom.util.RTCHelper
 import smart.com.classroom.util.RTMHelper
+import timber.log.Timber
 import viewmodel.KBaseViewModel
 import java.util.concurrent.TimeUnit
 
@@ -34,6 +35,8 @@ class ClassRoomVm : KBaseViewModel(){
     val rtmHelper =RTMHelper()
     val rtcHelper = RTCHelper()
 
+    var nextShowTime :Int=-1
+
     init {
         getClassRoomData()
     }
@@ -46,15 +49,32 @@ class ClassRoomVm : KBaseViewModel(){
         }
         rtcHelper.initHelper()
         rtmHelper.initData(RTM_TOKEN, UID.toString(), CHANNEL)
+        nextShowTime = showTimeStaps[0]
 
     }
 
 
+
     fun showHomeworkView(time: Int) {
-        val homeWork = classRoomRepository.findShowHomeWork(time)
-        homeWork?.let {
-            showHomeWork.value = it
+        Timber.e("showHomeworkView-------nextShowTime=$nextShowTime-----time=$time")
+
+        if (nextShowTime in 1..time){
+            val homeWork = classRoomRepository.findShowHomeWork(nextShowTime)
+            homeWork?.let {
+                showHomeWork.value = it
+
+                showTimeStaps.removeAt(0)
+
+                nextShowTime = if (showTimeStaps.isNotEmpty()){
+                    showTimeStaps[0]
+                }else{
+                    //没有时间段后 不用再判断
+                    -1
+                }
+            }
         }
+
+
     }
     lateinit var sub:Disposable
     var  timeStemp =0

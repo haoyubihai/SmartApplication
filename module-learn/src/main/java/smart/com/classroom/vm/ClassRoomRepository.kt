@@ -34,8 +34,12 @@ class ClassRoomRepository {
 
     private fun getShowHomeWork(): List<KeyValue> {
         return mutableListOf(
-            KeyValue(5.toString(),0.toString()),
+            KeyValue(5.toString(),3.toString()),
+            KeyValue(10.toString(),4.toString()),
+            KeyValue(15.toString(),5.toString()),
+            KeyValue(25.toString(),6.toString()),
             KeyValue(35.toString(),1.toString()),
+            KeyValue(45.toString(),1.toString()),
             KeyValue(65.toString(),2.toString())
         )
     }
@@ -60,6 +64,8 @@ class ClassRoomRepository {
      * 根据时间节点查找对应展示的试题
      */
     fun findShowHomeWork(time:Int):HomeWork? = findShowHomeworkId(time)?.let {findHomeWorkById(it)}
+
+    fun findFirstHomeworkShowTime():Int ?= classRMdata.showHomeWork?.firstOrNull()?.key?.toInt()
 
     fun findHomeWorkById(id:Int):HomeWork? = classRMdata.homeworkRes.homeWorks.find { it.id==id }
 

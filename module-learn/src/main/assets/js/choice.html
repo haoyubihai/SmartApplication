@@ -16,7 +16,7 @@
             height: 100vh;
             background-color: #FFDB52;
             background-image: url("./image/bg@2x.png");
-            /*background-position: center center;*/
+            background-position: center center;
         }
 
         #main .wapper {
@@ -40,6 +40,7 @@
 
         #main .clock div p {
             position: relative;
+            height: 1.4rem;
             top: 50%;
             transform: translateY(-50%);
             font-size: 1.25rem;
@@ -181,12 +182,12 @@
         #main .container .right .top ul li {
             width: 16.29rem;
             height: 4.08rem;
-            padding: 1.04rem 1.67rem;
+            padding: 0.94rem 0 0.94rem 1.67rem;
             margin-bottom: 1.79rem;
             list-style: none;
             background: rgba(255, 255, 255, 1);
-            border: 0.2rem solid rgba(255, 219, 82, 1);
-            box-shadow: 0rem 0rem 1rem 0rem rgba(172, 172, 172, 0.35);
+            border: 0.1rem solid rgba(255, 219, 82, 1);
+            box-shadow: 0rem 0rem 0.5rem 0rem rgba(172, 172, 172, 0.15);
             border-radius: 0.5rem;
         }
 
@@ -219,7 +220,7 @@
         #main .container .right .top ul li.option-right {
             position: relative;
             background: rgba(152, 224, 55, 1);
-            border: 0.2rem solid rgba(137, 216, 30, 1);
+            border: 0.1rem solid rgba(137, 216, 30, 1);
         }
 
         #main .container .right .top ul li.option-right:after {
@@ -257,7 +258,7 @@
         #main .container .right .top ul li.option-wrong {
             position: relative;
             background: rgba(255, 239, 240, 1);
-            border: 0.2rem solid rgba(255, 191, 195, 1);
+            border: 0.1rem solid rgba(255, 191, 195, 1);
         }
 
         #main .container .right .top ul li.option-wrong:after {
@@ -316,6 +317,8 @@
 
         #popBox {
             display: none;
+            justify-content: center;
+            align-items: center;
             background-color: transparent;
             z-index: 11;
             width: 21rem;
@@ -336,13 +339,10 @@
         #popBox .sorry {
             position: absolute;
             top: 2rem;
-            left:2rem;
+            left: 2rem;
             width: 16.88rem;
             height: 17.04rem;
         }
-
-
-
     </style>
 </head>
 <body>
@@ -389,7 +389,7 @@
     <audio id="wrong-audio" src="./music/wrong.wav" style="display: none"></audio>
 </div>
 </body>
-<script type="text/javascript">
+<script>
     // var json = {
     //     "answer": {
     //         "key": "A",
@@ -417,14 +417,37 @@
     //     "typeDesc": "desc"
     // };
     // 接收数据
-
-
-    function callByAndroidMoreParams(json){
+    function callByAndroidMoreParams(json) {
         window.json = json;
+
+    window.onload = function () {
+        // 倒计时
+        var count = json.time;
+        var timer = null;
+        timer = setInterval(function () {
+            if (count > 0) {
+                count--;
+                document.getElementsByClassName('timer')[0].innerText = '00 : ' + PrefixZero(count, 2);
+            } else {
+                clearInterval(timer);
+                document.getElementsByClassName('timer')[0].innerText = '00 : 00';
+                sendHelloToAndroid({'type': 0});
+            }
+        }, 1000);
+        // 填充题目
+        document.getElementsByClassName('title-content')[0].innerText = json.typeDesc;
+        document.getElementsByClassName('question')[0].innerText = json.title;
+        // 填充选项
+        var _html = '';
+        for (var i = 0; i < json.choices.length; i++) {
+            _html += '<li onclick="clickOption(event)" dataKey="' + json.choices[i].key + '" dataValue="' + json.choices[i].value + '" ><span class="letter">' + json.choices[i].key + '</span><span class="option">' + json.choices[i].value + '</span></li>';
+
+        }
+        document.getElementsByClassName('option-content')[0].innerHTML = _html;
+    };
     }
 
-    sendHelloToAndroid({'type':-1})
-
+    sendHelloToAndroid({'type': -1});
     window.option = false;
     detectOrient();
     window.onresize = function () {
@@ -452,31 +475,6 @@
         wrapper.style.cssText = style;
     }
 
-    window.onload = function () {
-        // 倒计时
-        var count = json.time;
-        var timer = null;
-        timer = setInterval(function () {
-            if (count > 0) {
-                count--;
-                document.getElementsByClassName('timer')[0].innerText = '00 : ' + PrefixZero(count, 2);
-            } else {
-                clearInterval(timer);
-                document.getElementsByClassName('timer')[0].innerText = '00 : 00';
-                sendHelloToAndroid({'type': 0});
-            }
-        }, 1000);
-        // 填充题目
-        document.getElementsByClassName('title-content')[0].innerText = json.typeDesc;
-        document.getElementsByClassName('question')[0].innerText = json.title;
-        // 填充选项
-        var _html = '';
-        for (var i = 0; i < json.choices.length; i++) {
-            _html += '<li onclick="clickOption(event)" dataKey="' + json.choices[i].key + '" dataValue="' + json.choices[i].value + '" ><span class="letter">' + json.choices[i].key + '</span><span class="option">' + json.choices[i].value + '</span></li>';
-
-        }
-        document.getElementsByClassName('option-content')[0].innerHTML = _html;
-    };
 
     function PrefixZero(num, n) {
         return (Array(n).join(0) + num).slice(-n);
@@ -495,15 +493,16 @@
 
     function clickOption(e) {
         e.preventDefault();
-        if(window.option){
+        if (window.option) {
             return false;
         }
         window.option = true;
         var e = e || window.event;
         var obj = e.target || e.srcElement;
-        if (obj.tagName == 'SPAN'){
+        if (obj.tagName == 'SPAN') {
             obj = obj.parentNode;
-        };
+        }
+        ;
         for (var i = 0; i < json.choices.length; i++) {
             if (json.choices[i]['key'] == obj.getAttribute("dataKey")) {
                 obj.classList.add('option-right');
@@ -547,10 +546,8 @@
     function popBox() {
         var popBox = document.getElementById("popBox");
         var popLayer = document.getElementById("popLayer");
-        popBox.style.display = "block";
+        popBox.style.display = "flex";
         popLayer.style.display = "block";
     }
-
-
 </script>
 </html>
