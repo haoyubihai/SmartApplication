@@ -8,7 +8,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 public class SmartVideoPlayer extends StandardGSYVideoPlayer {
 
-    boolean isTouchProgressUse = false;
+    boolean isTouchProgressUse = true;
 
     public SmartVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);

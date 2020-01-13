@@ -22,6 +22,8 @@ open class LocalClassRoomActivity : BaseActivity() {
     lateinit var videoNPlayer: StandardGSYVideoPlayer
     lateinit var choiceFragment: HomeWorkFragment
     private val classRoomVm: ClassRoomVm by viewModel()
+    var isHomeworkShow = false
+    var lastHwId = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initPlayer()
@@ -40,14 +42,16 @@ open class LocalClassRoomActivity : BaseActivity() {
             thumbImageView = thumbImg
             titleTextView.visibility = View.GONE
             backButton.visibility = View.GONE
-            setIsTouchWiget(false)
+            setIsTouchWiget(true)
             backButton.setOnClickListener { onBackPressed() }
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
-        val time = 0;
+        var time = 0
         videoNPlayer.setGSYVideoProgressListener { progress, secProgress, currentPosition, duration ->
-            Timber.e("setGSYVideoProgressListener--progress=$progress--secProgress=$secProgress--currentPosition=$currentPosition--duration=$duration")
-            classRoomVm.showHomeworkView(Math.floor(currentPosition / 1000.0).toInt())
+
+            time++
+            Timber.e("setGSYVideoProgressListener-视频定位到==old=${currentPosition}--currentPosition=${currentPosition/1000}--duration=$duration")
+            classRoomVm.showHomeworkView(currentPosition/1000,currentPosition)
         }
     }
 
@@ -58,24 +62,41 @@ open class LocalClassRoomActivity : BaseActivity() {
             it?.let {
                 //                toast("${it.title}")
 //                classRoomVm.stop()
+                Timber.e("showHomeworkView---it.id==${it}----lastHwId = $lastHwId")
+                if (!isHomeworkShow&&it>=0&&it!=lastHwId){
+                    lastHwId = it
+                    isHomeworkShow = true
+                    videoPlayer.onVideoPause()
+                    showHomeworkView(it)
 
-                videoPlayer.onVideoPause()
-                showHomeworkView()
+                }
+
             }
         })
 
         LiveEventBus.get(CLOSE_CHOICE_FRAGMENT).observe(this, Observer {
-            removeFragment(homeworkContainer, choiceFragment)
+            if (isHomeworkShow){
+                removeFragment(homeworkContainer, choiceFragment)
 //            classRoomVm.play()
-            videoPlayer.onVideoResume()
+                Timber.e("############--视频定位到==原始=${videoNPlayer.currentPositionWhenPlaying}")
+                val seekToPosition = videoNPlayer.currentPositionWhenPlaying+1500L
+
+                Timber.e("############--视频定位到==修改后=${videoNPlayer.currentPositionWhenPlaying}")
+//                videoPlayer.playPosition = seekToPosition.toInt()
+                videoNPlayer.onVideoResume()
+                videoNPlayer.seekTo(seekToPosition)
+//                videoNPlayer.seekOnStart
+
+                isHomeworkShow = false
+            }
 
         })
     }
 
 
-    private fun showHomeworkView() {
+    private fun showHomeworkView(id:Int) {
         homeworkContainer.visibility = View.VISIBLE
-        choiceFragment = HomeWorkFragment.newInstance(Random.nextInt(10))
+        choiceFragment = HomeWorkFragment.newInstance(id)
         loadFragment(R.id.homeworkContainer, choiceFragment)
     }
 
@@ -102,7 +123,7 @@ open class LocalClassRoomActivity : BaseActivity() {
         videoPlayer.setVideoAllCallBack(null)
     }
 
-    open fun getVideoUrl(): String = "https://jrvideo.oss-cn-zhangjiakou.aliyuncs.com/shouye.mp4"
+    open fun getVideoUrl(): String = "https://jrvideo.oss-cn-zhangjiakou.aliyuncs.com/%E5%AE%8C%E6%95%B4%E8%A7%86%E9%A2%91.mp4"
     open fun getVideoTitle(): String = "测试视频"
 
 }

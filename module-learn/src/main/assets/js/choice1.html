@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>choice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+            box-sizing: border-box;
+        }
+
+        #main {
+            width: 100vw;
+            height: 100vh;
+            background-color: #FFDB52;
+            background-image: url("./image/bg@2x.png");
+        }
+
+        #main .wapper {
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #main .clock {
+            margin: 0 auto;
+            width: 9.54rem;
+            padding-bottom: 0.33rem;
+        }
+
+        #main .clock div {
+            width: 9.54rem;
+            height: 2.71rem;
+            line-height: 2.71rem;
+            background: url("./image/clock@2x.png") no-repeat center center / 100% 100%;
+        }
+
+        #main .clock div p {
+            /*position: relative;*/
+            /*top: 50%;*/
+            /*transform: translateY(-50%);*/
+            padding-top: 0.63rem;
+            margin-left: 1rem;
+            height: 2.08rem;
+            line-height: 1.6rem;
+            font-size: 1.25rem;
+            font-family: PingFang SC;
+            font-weight: 600;
+            color: rgba(152, 98, 46, 1);
+            text-align: center;
+        }
+
+        #main .container {
+            margin: 0 auto;
+            position: relative;
+            padding: 0.54rem;
+            width: 49.96rem;
+            height: 26.38rem;
+            background: rgba(255, 189, 17, 1);
+            border-radius: 0.67rem;
+        }
+
+        #main .container .content {
+            display: flex;
+            justify-content: space-between;
+            align-content: center;
+        }
+
+        #main .container .left {
+            position: relative;
+            width: 24.29rem;
+            height: 25.37rem;
+            z-index: 2;
+        }
+
+        #main .container .left .top {
+            position: absolute;
+            top: 0;
+            width: 24.29rem;
+            height: 25.04rem;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 0.67rem;
+            z-index: 2;
+        }
+
+        #main .container .left .top .title {
+            display: table;
+            margin: 1.04rem 0 1.5rem 1.17rem;
+            padding: 0.33rem 0.92rem;
+            background: rgba(255, 117, 49, 1);
+            border-radius: 0.83rem;
+        }
+
+        #main .container .left .top .title p {
+            display: table-cell;
+            font-size: 1.04rem;
+            font-family: Yuanti SC;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            text-shadow: 0rem 0rem 0rem rgba(235, 150, 32, 0.31);
+            text-align: center;
+        }
+
+        #main .container .left .top .question {
+            position: relative;
+            z-index: 2;
+            padding: 0 1.79rem;
+            font-size: 1.25rem;
+            font-family: Yuanti SC;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        #main .container .left .top .picture {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            margin-top: 2rem;
+        }
+
+        #main .container .left .top .picture img {
+            max-width: 15rem;
+            border-radius: 0.67rem;
+        }
+
+        #main .container .left .top .question-bg {
+            position: relative;
+            width: 13.42rem;
+            height: 11.96rem;
+            position: absolute;
+            left: 0.79rem;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        #main .container .left .bottom {
+            position: absolute;
+            top: 0.33rem;
+            width: 24.29rem;
+            height: 25.04rem;
+            background: rgba(251, 226, 183, 1);
+            border-radius: 0.67rem;
+            z-index: 1;
+        }
+
+        #main .container .middle {
+            position: absolute;
+            top: 5.5rem;
+            left: 50%;
+            height: 14.5rem;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        #main .container .middle img {
+            width: 2.79rem;
+            height: 0.83rem;
+        }
+
+        #main .container .right {
+            position: relative;
+            width: 24.29rem;
+            height: 25.37rem;
+            z-index: 2;
+        }
+
+        #main .container .right .top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            width: 24.29rem;
+            height: 25.04rem;
+            background: rgba(255, 248, 236, 1);
+            border-radius: 0.67rem;
+            z-index: 2;
+        }
+
+        #main .container .right .top ul {
+            width: 16.29rem;
+        }
+
+        #main .container .right .top ul li {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 16.29rem;
+            /*height: 4.08rem;*/
+            padding: 0.94rem 0 0.94rem 1.67rem;
+            margin-bottom: 1.79rem;
+            list-style: none;
+            background: rgba(255, 255, 255, 1);
+            border: 0.1rem solid rgba(255, 219, 82, 1);
+            box-shadow: 0rem 0rem 0.5rem 0rem rgba(172, 172, 172, 0.15);
+            border-radius: 0.4rem;
+        }
+
+        #main .container .right .top ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        #main .container .right .top ul li .letter {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            line-height: 2rem;
+            background: rgba(253, 225, 157, 1);
+            border-radius: 50%;
+            font-size: 1.46rem;
+            font-family: Arial Rounded MT Bold;
+            font-weight: 400;
+            color: rgba(255, 135, 6, 1);
+            text-align: center;
+        }
+
+        #main .container .right .top ul li .option {
+            /*display: inline-flex;*/
+            margin-left: 2.79rem;
+            font-size: 1.25rem;
+            font-family: Yuanti SC;
+            font-weight: bold;
+            color: rgba(255, 135, 6, 1);
+        }
+
+        #main .container .right .top ul li .option img {
+            max-width: 4.5rem;
+        }
+
+        #main .container .right .top ul li.option-right {
+            position: relative;
+            background: rgba(152, 224, 55, 1);
+            border: 0.1rem solid rgba(137, 216, 30, 1);
+        }
+
+        #main .container .right .top ul li.option-right:after {
+            position: absolute;
+            right: -0.7rem;
+            top: -0.7rem;
+            content: '';
+            width: 1.67rem;
+            height: 1.67rem;
+            background: url("./image/right@2x.png") no-repeat center center / 100% 100%;
+        }
+
+        #main .container .right .top ul li.option-right .letter {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            line-height: 2rem;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 50%;
+            font-size: 1.46rem;
+            font-family: Arial Rounded MT Bold;
+            font-weight: 400;
+            color: rgba(137, 216, 30, 1);
+            text-align: center;
+        }
+
+        #main .container .right .top ul li.option-right .option {
+            margin-left: 2.79rem;
+            font-size: 1.25rem;
+            font-family: Yuanti SC;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        #main .container .right .top ul li.option-wrong {
+            position: relative;
+            background: rgba(255, 239, 240, 1);
+            border: 0.1rem solid rgba(255, 191, 195, 1);
+        }
+
+        #main .container .right .top ul li.option-wrong:after {
+            position: absolute;
+            right: -0.7rem;
+            top: -0.7rem;
+            content: '';
+            width: 1.67rem;
+            height: 1.67rem;
+            background: url("./image/wrong@2x.png") no-repeat center center / 100% 100%;
+        }
+
+        #main .container .right .top ul li.option-wrong .letter {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            line-height: 2rem;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 50%;
+            font-size: 1.46rem;
+            font-family: Arial Rounded MT Bold;
+            font-weight: 400;
+            color: rgba(255, 153, 159, 1);
+            text-align: center;
+        }
+
+        #main .container .right .top ul li.option-wrong .option {
+            margin-left: 2.79rem;
+            font-size: 1.25rem;
+            font-family: Yuanti SC;
+            font-weight: bold;
+            color: rgba(254, 113, 121, 1);
+        }
+
+        #main .container .right .bottom {
+            position: absolute;
+            top: 0.33rem;
+            width: 24.29rem;
+            height: 25.04rem;
+            background: rgba(251, 226, 183, 1);
+            border-radius: 0.67rem;
+            z-index: 1;
+        }
+
+        #popLayer {
+            display: none;
+            background-color: #000;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+            opacity: 0.6;
+        }
+
+        #popBox {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            z-index: 11;
+            width: 21rem;
+            height: 21rem;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        #popBox .good {
+            width: 21rem;
+            height: 19.29rem;
+        }
+
+        #popBox .sorry {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            width: 16.88rem;
+            height: 17.04rem;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div class="wapper">
+        <div class="clock">
+            <div><p class="timer">00 : 15</p></div>
+        </div>
+        <div class="container">
+            <div class="middle">
+                <img class="" src="./image/middle@2x.png"/>
+                <img class="" src="./image/middle@2x.png"/>
+                <img class="" src="./image/middle@2x.png"/>
+            </div>
+            <div class="content">
+                <div class="left">
+                    <div class="top">
+                        <div class="title"><p class="title-content"></p></div>
+                        <div class="question"></div>
+                        <div class="picture"></div>
+                        <img class="question-bg" src="./image/left@2x.png"/>
+                    </div>
+                    <div class="bottom"></div>
+                </div>
+                <div class="right">
+                    <div class="top">
+                        <ul class="option-content">
+                            <!--                            <li class="option-right"><span class="letter">A</span><span class="option">认识</span></li>-->
+                            <!--                            <li class="option-wrong"><span class="letter">B</span><span class="option">不认识</span></li>-->
+                            <!--                            <li><span class="letter">A</span><span class="option">认识</span></li>-->
+                            <!--                            <li><span class="letter">B</span><span class="option">不认识</span></li>-->
+                        </ul>
+                    </div>
+                    <div class="bottom"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popLayer"></div>
+    <div id="popBox">
+        <img class="good" src="./image/good@2x.png"/>
+        <img class="sorry" src="./image/sorry@2x.png"/>
+    </div>
+    <audio id="right-audio" src="./music/right.wav" style="display: none"></audio>
+    <audio id="wrong-audio" src="./music/wrong.wav" style="display: none"></audio>
+</div>
+</body>
+<script>
+    // var json = {
+    //     "answer": {
+    //         "key": "A",
+    //         "value": "handbag"
+    //     },
+    //     "choices": [
+    //         {
+    //             "key": "A",
+    //             "value": "handbag"
+    //         },
+    //         {
+    //             "key": "B",
+    //             "value": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578654589399&di=ca7c513e252421431e0b4ac52c760ca3&imgtype=0&src=http%3A%2F%2Fimg.25pp.com%2Fuploadfile%2Fsoft%2Fimages%2F2015%2F0410%2F20150410110113878.jpg"
+    //         },
+    //         {
+    //             "key": "C",
+    //             "value": "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2222018541,453762104&fm=26&gp=0.jpg"
+    //         }
+    //     ],
+    //     "content": "http://g.hiphotos.baidu.com/zhidao/pic/item/c83d70cf3bc79f3d6e7bf85db8a1cd11738b29c0.jpg",
+    //     "id": 0,
+    //     "time": 15,
+    //     "title": "What can you see in the picture ?",
+    //     "type": 0,
+    //     "typeDesc": "看问题选答案"
+    // };
+    // callByAndroidMoreParams();
+    // 接收数据
+    function callByAndroidMoreParams(json) {
+        window.json = json;
+        window.onload = function () {
+            // 倒计时
+            var count = json.time;
+            var timer = null;
+            timer = setInterval(function () {
+                if (count > 0) {
+                    count--;
+                    document.getElementsByClassName('timer')[0].innerText = '00 : ' + PrefixZero(count, 2);
+                } else {
+                    clearInterval(timer);
+                    document.getElementsByClassName('timer')[0].innerText = '00 : 00';
+                    sendHelloToAndroid({'type': 0});
+                }
+            }, 1000);
+            // 填充题目
+            document.getElementsByClassName('title-content')[0].innerText = json.typeDesc;
+            document.getElementsByClassName('question')[0].innerText = json.title;
+            if (isImage(json.content)) {
+                document.getElementsByClassName('picture')[0].innerHTML = '<img src="' + json.content + '"/>';
+                document.getElementsByClassName('question-bg')[0].style.display = "none";
+            } else {
+                document.getElementsByClassName('question-bg')[0].style.display = "block";
+            }
+            // 填充选项
+            var _html = '';
+            for (var i = 0; i < json.choices.length; i++) {
+                if (isImage(json.choices[i].value)) {
+                    _html += '<li onclick="clickOption(event)" dataKey="' + json.choices[i].key + '" dataValue="' + json.choices[i].value + '" ><span class="letter">' + json.choices[i].key + '</span><span class="option"><img src="' + json.choices[i].value + '"/></span></li>';
+                } else {
+                    _html += '<li onclick="clickOption(event)" dataKey="' + json.choices[i].key + '" dataValue="' + json.choices[i].value + '" ><span class="letter">' + json.choices[i].key + '</span><span class="option">' + json.choices[i].value + '</span></li>';
+                }
+            }
+            document.getElementsByClassName('option-content')[0].innerHTML = _html;
+        };
+    }
+ sendHelloToAndroid({'type': -1});
+    window.option = false;
+    detectOrient();
+    window.onresize = function () {
+        detectOrient();
+    };
+
+    function detectOrient() {
+        let width = document.documentElement.clientWidth / 12,
+            height = document.documentElement.clientHeight / 12,
+            wrapper = document.getElementById("main"),
+            style = "";
+        if (width >= height) { // 竖屏
+            style += "width:100%";
+            style += "height:100%;";
+            style += "-webkit-transform: rotate(0); transform: rotate(0);";
+            style += "-webkit-transform-origin: 0 0;";
+            style += "transform-origin: 0 0;";
+        } else { // 横屏
+            style += "width:" + height + "rem;";
+            style += "height:" + width + "rem;";
+            style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+            style += "-webkit-transform-origin: " + width / 2 + "rem " + width / 2 + "rem;";
+            style += "transform-origin: " + width / 2 + "rem " + width / 2 + "rem;";
+        }
+        wrapper.style.cssText = style;
+    }
+
+    function PrefixZero(num, n) {
+        return (Array(n).join(0) + num).slice(-n);
+    }
+
+    function sendHelloToAndroid(_obj) {
+        // body...
+        //console.log("call android")
+        if (window.android != null && typeof (window.android) != "undefined") {
+            window.android.callPhone(JSON.stringify(_obj));
+        } else {
+            alert(typeof (window.android));
+        }
+
+    }
+
+    function clickOption(e) {
+        e.preventDefault();
+        if (window.option) {
+            return false;
+        }
+        window.option = true;
+        var e = e || window.event;
+        var obj = e.target || e.srcElement;
+        if (obj.tagName == 'SPAN') {
+            obj = obj.parentNode;
+        }
+        if (obj.tagName == 'IMG') {
+            obj = obj.parentNode.parentNode;
+        }
+        for (var i = 0; i < json.choices.length; i++) {
+            if (json.choices[i]['key'] == obj.getAttribute("dataKey")) {
+                obj.classList.add('option-right');
+                setTimeout(function () {
+                    popBox();
+                    document.getElementsByClassName('good')[0].style.display = "block";
+                    document.getElementsByClassName('sorry')[0].style.display = "none";
+                    document.getElementById('right-audio').play();
+                }, 500);
+                question(obj);
+                return false;
+            } else {
+                obj.classList.add('option-wrong');
+                setTimeout(function () {
+                    popBox();
+                    document.getElementsByClassName('good')[0].style.display = "none";
+                    document.getElementsByClassName('sorry')[0].style.display = "block";
+                    document.getElementById('wrong-audio').play();
+                }, 500);
+                question(obj);
+                return false;
+            }
+        }
+    }
+
+    function question(obj) {
+        var _option = {
+            "extra": [
+                {
+                    "key": obj.getAttribute("dataKey"),
+                    "value": obj.getAttribute("dataValue")
+                }
+            ],
+            "type": 1
+        };
+        console.log(_option);
+        sendHelloToAndroid(_option);
+    }
+
+    // 点击弹出按钮
+    function popBox() {
+        var popBox = document.getElementById("popBox");
+        var popLayer = document.getElementById("popLayer");
+        popBox.style.display = "flex";
+        popLayer.style.display = "block";
+    }
+
+    // 判断是否为图片格式--img标签可打开的
+    function isImage(str) {
+        var reg = /\.(png|jpg|gif|jpeg)$/;
+        return reg.test(str);
+    }
+</script>
+</html>

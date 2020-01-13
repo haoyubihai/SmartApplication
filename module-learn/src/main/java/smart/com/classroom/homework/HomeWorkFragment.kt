@@ -43,6 +43,7 @@ class HomeWorkFragment : WebFragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             homeworkId = it.getInt("hwID")
+            Timber.e("HomeWorkFragment---homeworkId=$homeworkId")
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,12 +54,15 @@ class HomeWorkFragment : WebFragment() {
             return
         }
         homeWork = classRoomVm.classRoomRepository.findHomeWorkById(homeworkId!!)
+        Timber.e("HomeWorkFragment---homeworkTitle=${homeWork?.title}")
+
         agentWeb.jsInterfaceHolder.addJavaObject("android",HomeworkWebHandler{
             Timber.e("返回的json==$it")
             val webCallRes = Gson().fromJson<WebCallRes>(it,WebCallRes::class.java)
             webCallRes?.let {
                 when(it.type){
                     WEB_LOAD_BEGIN->{
+                        initWebHomeworkData()
                     }
                     WEB_RES_TIME_OVER->{
                         exit()
@@ -92,7 +96,11 @@ class HomeWorkFragment : WebFragment() {
     }
 
     override fun getUrl(): String? {
-        return "file:///android_asset/js/choice.html"
+        when(homeworkId){
+            2-> return "file:///android_asset/js/choice1.html"
+
+        }
+        return "file:///android_asset/js/choice2.html"
     }
     override fun getViewContainer() = webContainer
 
@@ -100,7 +108,7 @@ class HomeWorkFragment : WebFragment() {
         return object :WebViewClient(){
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                initWebHomeworkData()
+//                initWebHomeworkData()
             }
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)

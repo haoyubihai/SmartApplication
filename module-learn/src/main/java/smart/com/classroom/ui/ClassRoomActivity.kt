@@ -33,6 +33,7 @@ class ClassRoomActivity : BaseActivity() {
     lateinit var rtcHelper: RTCHelper
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)

@@ -29,7 +29,7 @@ data class HomeWork(
     /** 作业类型描述 ：如看图选择答案*/
     val typeDesc: String,
     /** id */
-    val id: Int,
+    val id: Int=-1,
     /** 标题*/
     val title: String,
     /** 内容 ,图片地址，或者文本信息 没有为null*/
